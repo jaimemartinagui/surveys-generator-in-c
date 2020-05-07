@@ -194,23 +194,19 @@ int main(){
         if (opcion == 2)
             agregar_preguntas(ruta_completa_archivo);
         
-        // ================================= OPCION PARA VISUALIZAR LOS ULTIMOS RESULTADOS =================================
+        // ================================= OPCION PARA VISUALIZAR LOS ULTIMOS RESULTADOS ===============================
         if (opcion == 3){
             if (ejecuciones_aplicacion == 1){
                 printf("\nTodavía no hay resultados de ninguna encuesta.\n");
                 ejecuciones_aplicacion--;
             } else {
-                
                 // Abro el fichero de resultados en modo lectura
                 FILE *fp;
                 fp = fopen("resultado_encuesta.txt", "r");
-                
                 char pregunta[200];
-                
                 // Recorro todas las preguntas del fichero
-                while (fgets(pregunta, 200, (FILE*) fp)){
+                while (fgets(pregunta, 200, (FILE*) fp))
                     printf("%s", pregunta);
-                }
                 // Cierro el fichero
                 fclose(fp);
             }
@@ -322,9 +318,8 @@ void insertar_pregunta(pNodo *inicioLista, Pregunta *p){
     pRec = *inicioLista; // Inicio el puntero pRec en la Cabeza de lista
     if (pRec){ 
         // Si la lista no esta vacia recorro la lista hasta su ultimo elemento
-        while (pRec->pSig != NULL){
+        while (pRec->pSig != NULL)
             pRec = pRec->pSig;
-        }
         // Cuando salgo del bucle while ya estoy situado en el ultimo elemento de la lista
         // Inserto un nodo despues del ultimo, es decir, en la cola
         insertar_despues(pRec, p);
