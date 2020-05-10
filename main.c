@@ -23,7 +23,7 @@ char respuestaD[10] = "Muy mal";
 
 
 // Estructura para cada pregunta de la encuesta
-typedef struct pregunta{
+typedef struct pregunta {
     char texto[TAM];
     int tamano;
     int numPregunta;
@@ -32,7 +32,7 @@ typedef struct pregunta{
 } Pregunta;
 
 
-struct Nodo{
+struct Nodo {
     Pregunta p;
     struct Nodo *pSig; // Puntero al siguiente nodo de la lista
 };
@@ -53,7 +53,7 @@ void ejecutar_encuesta(pNodo *inicioLista);
 int contar_preguntas_totales(pNodo *pCabeza);
 
 
-int main(){
+int main() {
     
     srand(time(NULL));
     int opcion = 0;
@@ -73,7 +73,7 @@ int main(){
     
     int ejecuciones_aplicacion = 0;
     
-    while (opcion != 4){
+    while (opcion != 4) {
         
         ejecuciones_aplicacion++;
         
@@ -84,7 +84,7 @@ int main(){
         scanf("%i", &opcion);
         
         // ================================= OPCION PARA REALIZAR LA ENCUESTA =================================
-        if (opcion == 1){
+        if (opcion == 1) {
             // Cargar las preguntas del fichero en una lista enlazada
             // Primero vaciamos las listas
             pCabeza = NULL;
@@ -106,7 +106,7 @@ int main(){
             printf("\n");
             
             // Muestro un error si se indican mas preguntas de las que hay en la lista
-            while (numPreguntas > numPreguntasTotal){
+            while (numPreguntas > numPreguntasTotal) {
                 printf("\nError: Número de preguntadas seleccionado superior al número de preguntas totales indicado\n");
                 printf("\nDe un total de %i preguntas, ¿cuántas quiere incluir en la encuesta?: ", numPreguntasTotal);
                 scanf("%i", &numPreguntas);
@@ -119,13 +119,13 @@ int main(){
             int i, j, random_num, repeated_value;
             int lista_indices_preguntas[numPreguntas];
             
-            for (i=0; i<numPreguntas; i++){
+            for (i=0; i<numPreguntas; i++) {
                 repeated_value = 0;
                 random_num = rand() % (numPreguntasTotal) + 1;
                 if (i == 0)
                     lista_indices_preguntas[i] = random_num;
                 else {
-                    for (j=0; j<i; j++){
+                    for (j=0; j<i; j++) {
                         if (random_num == lista_indices_preguntas[j]) 
                             repeated_value = 1;
                     }
@@ -143,12 +143,12 @@ int main(){
             
             // Pregunto al usuario cuantas veces quiere realizar la encuesta
             int c;
-            while ((c=getchar()) != '\n' && c != EOF){}
+            while ((c=getchar()) != '\n' && c != EOF) {}
             printf("\n¿Cuántas veces quiere realizar la encuesta?: ");
             scanf("%i", &numVecesEncuesta);
             
             pNodo pAux; // Puntero para recorrer la lista y guardar las respuestas a cada pregunta
-            for (i=0; i<numVecesEncuesta; i++){
+            for (i=0; i<numVecesEncuesta; i++) {
                 printf("\n----------------- Encuesta %i -----------------\n", i + 1);
                 pAux = pCabezaEncuesta;
                 ejecutar_encuesta(&pAux);
@@ -161,7 +161,7 @@ int main(){
             FILE* fichero;
             fichero = fopen("resultado_encuesta.txt", "w");
             
-            while (pRec2 != NULL){
+            while (pRec2 != NULL) {
                 printf("\n%s", pRec2->p.texto);
                 int resA = (pRec2->p.respA) * 100 / i;
                 int resB = (pRec2->p.respB) * 100 / i;
@@ -195,8 +195,8 @@ int main(){
             agregar_preguntas(ruta_completa_archivo);
         
         // ================================= OPCION PARA VISUALIZAR LOS ULTIMOS RESULTADOS ===============================
-        if (opcion == 3){
-            if (ejecuciones_aplicacion == 1){
+        if (opcion == 3) {
+            if (ejecuciones_aplicacion == 1) {
                 printf("\nTodavía no hay resultados de ninguna encuesta.\n");
                 ejecuciones_aplicacion--;
             } else {
@@ -220,11 +220,11 @@ int main(){
 // ============================================= FUNCIONES =============================================
 
 
-int contar_preguntas_totales(pNodo *pCabeza){
+int contar_preguntas_totales(pNodo *pCabeza) {
     int numPreguntasTotal = 0;
     pNodo pRec;
     pRec = *pCabeza;
-    while (pRec != NULL){
+    while (pRec != NULL) {
         numPreguntasTotal++;
         pRec = pRec->pSig;
     }
@@ -233,7 +233,7 @@ int contar_preguntas_totales(pNodo *pCabeza){
 }
 
 
-void ejecutar_encuesta(pNodo *inicioLista){
+void ejecutar_encuesta(pNodo *inicioLista) {
     char caracter_A[] = "A"; char caracter_a[] = "a"; char caracter_B[] = "B"; char caracter_b[] = "b"; 
     char caracter_C[] = "C"; char caracter_c[] = "c"; char caracter_D[] = "D"; char caracter_d[] = "d";
     char respuesta[2];
@@ -241,7 +241,7 @@ void ejecutar_encuesta(pNodo *inicioLista){
     pNodo pRec;
     pRec = *inicioLista;
     int conta = 0;
-    while (pRec != NULL){
+    while (pRec != NULL) {
         conta++;
         printf("\nPregunta %i\n", conta);
         printf("-----------\n");
@@ -249,11 +249,11 @@ void ejecutar_encuesta(pNodo *inicioLista){
         printf("A): %s\tB): %s\n", respuestaA, respuestaB);
         printf("C): %s\t\tD): %s\n", respuestaC, respuestaD);
         printf("\nIntroduzca su respuesta: ");
-        while ((c=getchar()) != '\n' && c != EOF){}
+        while ((c=getchar()) != '\n' && c != EOF) {}
         scanf("%s", &respuesta);
         while (strcmp(respuesta, caracter_A) != 0 && strcmp(respuesta, caracter_a) != 0 && strcmp(respuesta, caracter_B) != 0 && 
                strcmp(respuesta, caracter_b) != 0 && strcmp(respuesta, caracter_C) != 0 && strcmp(respuesta, caracter_c) != 0 && 
-               strcmp(respuesta, caracter_D) != 0 && strcmp(respuesta, caracter_d) != 0){
+               strcmp(respuesta, caracter_D) != 0 && strcmp(respuesta, caracter_d) != 0) {
             printf("\nError: respuesta no válida\n");
             printf("\nIntroduzca su respuesta: ");
             getc(stdin);
@@ -276,7 +276,7 @@ void ejecutar_encuesta(pNodo *inicioLista){
 
 
 // Funcion para agregar preguntas al fichero
-void agregar_preguntas(char *ruta_completa_archivo){
+void agregar_preguntas(char *ruta_completa_archivo) {
     
     // Pregunto al usuario el numero de preguntas a agregar
     int num_preguntas_nuevas = 0, i;
@@ -288,7 +288,7 @@ void agregar_preguntas(char *ruta_completa_archivo){
     FILE *fp;
     fp = fopen(ruta_completa_archivo, "a+");
     
-    for (i=0; i<num_preguntas_nuevas; i++){
+    for (i=0; i<num_preguntas_nuevas; i++) {
         // Limpiamos el buffer del teclado
         setbuf(stdin, NULL);
         char pregunta_nueva[100];
@@ -302,7 +302,7 @@ void agregar_preguntas(char *ruta_completa_archivo){
 
 
 // Funcion para insertar un elemento a la lista
-void insertar_despues(pNodo pExistente, Pregunta *p){
+void insertar_despues(pNodo pExistente, Pregunta *p) {
     pExistente->pSig = (pNodo)malloc(sizeof(struct Nodo)); // Se crea el nodo
     pExistente->pSig->p = *p;
     // Se ajustan los punteros
@@ -313,10 +313,10 @@ void insertar_despues(pNodo pExistente, Pregunta *p){
 // Funcion para insertar una pregunta a la lista enlazada. Esta funcion recibe
 // como parametros un puntero al puntero del primer Nodo de la lista y un puntero a una
 // estructura de tipo Pregunta
-void insertar_pregunta(pNodo *inicioLista, Pregunta *p){
+void insertar_pregunta(pNodo *inicioLista, Pregunta *p) {
     pNodo pRec; // Puntero para recorrer la lista
     pRec = *inicioLista; // Inicio el puntero pRec en la Cabeza de lista
-    if (pRec){ 
+    if (pRec) { 
         // Si la lista no esta vacia recorro la lista hasta su ultimo elemento
         while (pRec->pSig != NULL)
             pRec = pRec->pSig;
@@ -334,14 +334,14 @@ void insertar_pregunta(pNodo *inicioLista, Pregunta *p){
 
 
 // Funcion que genera y devulve la lista enlazada con todas las preguntas del fichero
-pNodo generarListaCompleta(char *ruta_completa_archivo, pNodo *pCabeza){
+pNodo generarListaCompleta(char *ruta_completa_archivo, pNodo *pCabeza) {
     char pregunta[200];
     int num_preguntas = 0;
     Pregunta p;
     
     // Compruebo que el fichero se carga correctamente
     int open_file = exists(ruta_completa_archivo);
-    switch (open_file){
+    switch (open_file) {
         case 0:
             printf("\nArchivo abierto correctamente"); 
             printf("\n-----------------------------\n");  
@@ -350,7 +350,7 @@ pNodo generarListaCompleta(char *ruta_completa_archivo, pNodo *pCabeza){
             fp = fopen(ruta_completa_archivo, "r");
             
             // Recorro todas las preguntas del fichero
-            while (fgets(pregunta, 200, (FILE*) fp)){
+            while (fgets(pregunta, 200, (FILE*) fp)) {
                 num_preguntas++;
                 strcpy(p.texto, pregunta);
                 p.tamano = strlen(pregunta);
@@ -376,7 +376,7 @@ pNodo generarListaCompleta(char *ruta_completa_archivo, pNodo *pCabeza){
 
 // Funcion que genera y devulve la lista enlazada con las preguntas que se mostraran en la encuesta,
 // tomadas del fichero de preguntas mediante el vector aleatorio
-pNodo generarListaEncuesta(char *ruta_completa_archivo, pNodo *pCabeza, int random_num_list[], int numPreguntas){
+pNodo generarListaEncuesta(char *ruta_completa_archivo, pNodo *pCabeza, int random_num_list[], int numPreguntas) {
     char pregunta[200];
     int i, num_preguntas_fichero = 0, indice_pregunta = 0;
     Pregunta p;
@@ -386,15 +386,15 @@ pNodo generarListaEncuesta(char *ruta_completa_archivo, pNodo *pCabeza, int rand
     fp = fopen(ruta_completa_archivo, "r");
     
     // Recorro todas las preguntas del fichero y me quedo con las que coinciden con los elementos del vector aleatorio
-    while (fgets(pregunta, 200, (FILE*) fp)){
+    while (fgets(pregunta, 200, (FILE*) fp)) {
         
         num_preguntas_fichero++;
         int coincidencia = 0;
-        for (i=0; i<numPreguntas; i++){
+        for (i=0; i<numPreguntas; i++) {
             if (num_preguntas_fichero == random_num_list[i])
                 coincidencia++;
         }
-        if (coincidencia != 0){
+        if (coincidencia != 0) {
             indice_pregunta++;
             strcpy(p.texto, pregunta);
             p.tamano = strlen(pregunta);
@@ -410,7 +410,7 @@ pNodo generarListaEncuesta(char *ruta_completa_archivo, pNodo *pCabeza, int rand
 
 
 // Funcion para comprobar si existe el archivo de preguntas y si se abre correctamente
-short exists(char *ruta_completa_archivo){
+short exists(char *ruta_completa_archivo) {
     int fd = open(ruta_completa_archivo, O_RDONLY);
     if (fd < 0) /* error */
         return (errno==ENOENT)?-1:-2;
@@ -420,7 +420,7 @@ short exists(char *ruta_completa_archivo){
 }
 
 
-void menu(){
+void menu() {
     printf("\n");
     printf("============================================\n");
     printf("            GENERADOR DE ENCUESTAS          \n");
