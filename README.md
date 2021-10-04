@@ -1,4 +1,4 @@
-# Surveys-Generator-in-C
+# Surveys Generator in C
 
 Surveys generator that selects from a text file a configurable number (at run time) of questions to produce the survey.
 
